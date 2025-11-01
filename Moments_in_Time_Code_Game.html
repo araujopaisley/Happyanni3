@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Moments in Time — Enter Code</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Arial; background:#fff7eb; color:#222; display:flex; align-items:center; justify-content:center; height:100vh; margin:0; }
+    .card { background:white; padding:28px; border-radius:12px; box-shadow:0 6px 30px rgba(0,0,0,0.08); width:360px; text-align:center; }
+    input { font-size:18px; padding:10px; width:100%; box-sizing:border-box; margin-top:12px; border-radius:8px; border:1px solid #ddd; text-align:center; letter-spacing:6px; }
+    button { margin-top:14px; padding:10px 16px; border-radius:8px; border:none; cursor:pointer; font-weight:600; }
+    .secret { margin-top:18px; padding:14px; border-radius:8px; background:#fff3d7; display:none; white-space:pre-wrap; }
+    .hint { margin-top:8px; color:#666; font-size:13px; }
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-labelledby="title">
+    <h2 id="title">Moments in Time</h2>
+    <div>Enter the <strong>4-digit code</strong> to reveal the message.</div>
+    <input id="codeInput" type="text" inputmode="numeric" maxlength="4" placeholder="••••" />
+    <button id="checkBtn">Unlock</button>
+    <div class="hint">Hint: each clue holds one digit.</div>
+    <div id="secret" class="secret"></div>
+  </div>
+
+  <script>
+    const correctCode = "7280"; // your 4-digit code
+    const secretMessage = "Yay! We’re going on a Catalina Island day trip!"; // your secret message
+
+    const input = document.getElementById('codeInput');
+    const btn = document.getElementById('checkBtn');
+    const secret = document.getElementById('secret');
+
+    function showSecret() {
+      if (input.value === correctCode) {
+        secret.textContent = secretMessage;
+        secret.style.display = 'block';
+        btn.textContent = 'Unlocked';
+        input.disabled = true;
+      } else {
+        secret.style.display = 'block';
+        secret.textContent = 'Nope — try again.';
+        setTimeout(()=> { if (input.disabled===false) secret.style.display='none'; }, 1500);
+      }
+    }
+
+    btn.addEventListener('click', showSecret);
+    input.addEventListener('keydown', e => { if (e.key === 'Enter') showSecret(); });
+  </script>
+</body>
+</html>
